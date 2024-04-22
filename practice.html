@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>This is the application</h1>
+    <ul id="userApplication">
+        <!--  users will be added here  -->
+    </ul>
+    <script>
+        // Function to fetch items from the backend and update the list
+        function fetchItems() {
+            fetch('/items')
+                .then(response => response.json())
+                .then(data => {
+                    const itemList = document.getElementById('item-list');
+                    itemList.innerHTML = ''; // Clear previous items
+
+                    data.forEach(item => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = item.name; // Assuming 'name' is a field in your MongoDB documents
+                        itemList.appendChild(listItem);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching items:', error);
+                });
+        }
+
+        // Call fetchItems function when the page loads
+        window.onload = fetchItems;
+    </script>
+</body>
+</html>
